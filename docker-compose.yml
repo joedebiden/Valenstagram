@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  flask-server:
+    build: ./server
+    container_name: flask-server
+    ports:
+      - "5000:5000"
+
+  react-client:
+    build: ./client
+    container_name: react-client
+    ports:
+      - "3001:80"  # Mapping external port 3001 to internal port 80
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - flask-server
+      - react-client
